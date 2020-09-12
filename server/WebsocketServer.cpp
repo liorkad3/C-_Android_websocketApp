@@ -61,7 +61,18 @@ void WebsocketServer::sendMessage(ClientConnection conn, const string& messageTy
 	messageData[MESSAGE_FIELD] = messageType;
 	
 	//Send the JSON data to the client (will happen on the networking thread's event loop)
-	this->endpoint.send(conn, WebsocketServer::stringifyJson(messageData), websocketpp::frame::opcode::text);
+	// this->endpoint.send(conn, WebsocketServer::stringifyJson(messageData), websocketpp::frame::opcode::text);
+	unsigned char m_Test[20];
+	for (int i = 0; i < 20; i++)
+	{
+		std::clog << i << std::endl;
+		m_Test[i] = i & 0xFF;
+	}
+	// std::string s( reinterpret_cast< char const* >(m_Test) , 20);
+	
+	// this->endpoint.send(conn, s, websocketpp::frame::opcode::TEXT);
+	this->endpoint.send(conn, static_cast<const void*>(m_Test), 20, websocketpp::frame::opcode::binary);
+
 }
 
 void WebsocketServer::broadcastMessage(const string& messageType, const Json::Value& arguments)

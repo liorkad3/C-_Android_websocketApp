@@ -1,0 +1,4 @@
+/mnt/c/Users/liork/Downloads/git_projects/websocket-server-demo/server/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/liork/Downloads/git_projects/websocket-server-demo/server/build/CMakeFiles/server.dir
+/mnt/c/Users/liork/Downloads/git_projects/websocket-server-demo/server/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/liork/Downloads/git_projects/websocket-server-demo/server/build/CMakeFiles/jsoncpp.dir
