@@ -3,12 +3,14 @@ package com.lk.androidclient
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import com.neovisionaries.ws.client.*
 
 
 class MainActivity : AppCompatActivity() {
     companion object{
         const val TAG = "MainActivity"
+        const val MESSAGE_FIELD = "__MESSAGE__"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,16 @@ class MainActivity : AppCompatActivity() {
         override fun onBinaryFrame(websocket: WebSocket?, frame: WebSocketFrame?) {
             val data = frame?.payload
             data?.let { Log.d(TAG, "onBinaryFrame: test: ${it[4]}, size: ${data.size}") }
+
+            val gson = Gson()
+            val message = gson.toJson(mapOf(MESSAGE_FIELD to "received"))
+            val message2 = gson.toJson(mapOf("abs" to "received"))
+            Log.d(TAG, "onBinaryFrame: message = $message")
+            Log.d(TAG, "onBinaryFrame: message = $message2")
+
+            websocket?.sendBinary(message.toByteArray(), true)
+            websocket?.sendBinary(message2.toByteArray(), true)
+
         }
 
         override fun onFrame(websocket: WebSocket?, frame: WebSocketFrame?) {

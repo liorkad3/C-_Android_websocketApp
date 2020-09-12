@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 				std::clog << "\t" << key << ": " << args[key].asString() << std::endl;
 			}
 			
-			//Echo the message pack to the client
+			//Echo the message back to the client
 			server.sendMessage(conn, "message", args);
 		});
 	});

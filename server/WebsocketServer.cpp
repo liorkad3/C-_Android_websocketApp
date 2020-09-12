@@ -138,14 +138,17 @@ void WebsocketServer::onClose(ClientConnection conn)
 void WebsocketServer::onMessage(ClientConnection conn, WebsocketEndpoint::message_ptr msg)
 {
 	//Validate that the incoming message contains valid JSON
+	std::clog << "message received" << std::endl;
 	Json::Value messageObject = WebsocketServer::parseJson(msg->get_payload());
 	if (messageObject.isNull() == false)
 	{
 		//Validate that the JSON object contains the message type field
 		if (messageObject.isMember(MESSAGE_FIELD))
 		{
+			std::clog << "message field" << std::endl;
 			//Extract the message type and remove it from the payload
 			std::string messageType = messageObject[MESSAGE_FIELD].asString();
+			std::clog << messageType << std::endl;
 			messageObject.removeMember(MESSAGE_FIELD);
 			
 			//If any handlers are registered for the message type, invoke them
@@ -153,6 +156,8 @@ void WebsocketServer::onMessage(ClientConnection conn, WebsocketEndpoint::messag
 			for (auto handler : handlers) {
 				handler(conn, messageObject);
 			}
+		}else{
+			std::clog << "not message field" << std::endl;
 		}
 	}
 }
